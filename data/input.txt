@@ -1,0 +1,153 @@
+The Tiny Language Model Lab Notebook
+
+Chapter 1. A small beginning.
+
+Every morning the researcher opened the notebook and wrote one sentence.
+The sentence was never very long, but it was always honest.
+Today we train a small model, she wrote, and we will train it on the CPU.
+The machine was old and quiet, and it had no fancy graphics card.
+It had a fan that hummed softly and a memory that was small but clean.
+The researcher liked the quiet machine because it never complained.
+It simply computed, one batch at a time, until the numbers improved.
+
+A language model, she reminded herself, is only a probability machine.
+It looks at the tokens it has seen and guesses what should come next.
+If the guess is good, the loss goes down and the weights are kept.
+If the guess is bad, the loss goes up and the weights are nudged.
+This is the whole idea, repeated millions of times, patiently.
+There is no magic in the loop, only arithmetic and a little patience.
+
+Chapter 2. Tokens and characters.
+
+A tokenizer turns text into numbers that a computer can work with.
+In this little lab we use the simplest tokenizer of all: characters.
+Every letter, space, comma and newline becomes an integer id.
+The model does not know the meaning of a single character.
+It only knows that some characters tend to follow other characters.
+After the letter t, perhaps the letter h will appear.
+After a newline, perhaps the word The will appear again.
+This is enough to start, and starting is the hardest part.
+
+The vocabulary is the set of all characters in the corpus.
+We sort them and give each one a number from zero upward.
+When the model speaks, it produces numbers, and we turn them back into text.
+The circle is closed: text to numbers, numbers to text.
+The researcher drew this circle in the margin of her notebook.
+She drew it again whenever she felt confused, which was often.
+
+Chapter 3. The shape of the model.
+
+The model is a stack of transformer blocks, one after another.
+Each block has two jobs: mix information across positions, and think.
+The mixing job is called attention, and it is surprisingly simple.
+Each token looks back at earlier tokens and decides what to pay attention to.
+It cannot look forward, because the future has not happened yet.
+This rule is called causality, and it keeps the model honest.
+A mask hides the future so that cheating is impossible.
+
+The thinking job is a small neural network applied to each position.
+It takes a vector, expands it, applies a smooth function, and shrinks it back.
+Between these jobs there are normalisations that keep the numbers calm.
+And around each job there is a shortcut, a residual path, so gradients can flow.
+Stack a few blocks together and you have a tiny GPT.
+It is much smaller than the famous models, but it is made of the same ideas.
+
+Chapter 4. Training on the CPU.
+
+The researcher set the device to cpu and checked the settings.
+The batch size was sixteen and the context length was one hundred twenty eight.
+The learning rate was tiny, three times ten to the minus four.
+Three layers, four heads, and an embedding width of one hundred twenty eight.
+These numbers were not special; they were simply small enough to be friendly.
+On a GPU they would have been laughable, but on the CPU they were perfect.
+
+The training loop was short enough to fit on one page.
+Take a batch, compute the loss, clear the gradients, backpropagate, step.
+Clip the gradients so that no single update becomes too large.
+Warm up the learning rate at the start, then decay it like a cosine.
+Print the loss every ten steps so that progress can be seen.
+Every few hundred steps, let the model write a sample.
+The sample is usually nonsense at first, and then slowly becomes less strange.
+
+Chapter 5. Watching the loss.
+
+At step zero the loss was about four point one.
+The model was guessing almost uniformly among the characters.
+By step one hundred the loss had fallen below three.
+The model had learned that spaces are common and that the letter e is frequent.
+By step five hundred the loss was near two.
+The model had learned the shape of words and the rhythm of sentences.
+The researcher smiled at the numbers because they told a simple story.
+Learning was happening, quietly, on a machine with no graphics card.
+
+Sometimes the loss on the validation split was higher than on training.
+This was expected, because the model had never seen those characters in that order.
+The gap was a reminder that memorising is not the same as understanding.
+The researcher wrote this down, because she wanted to remember it later.
+
+Chapter 6. The first sample.
+
+The model was given a single token and asked to continue.
+At first it produced strings like: the the the and and of of to to.
+Then it produced words that looked almost real: tha, wich, lern, modle.
+Then one morning it wrote: the small model learns one token at a time.
+The researcher read the line twice and laughed out loud.
+It was not profound, but it was grammatical, and it was new.
+No one had written that sentence before, at least not in that corpus.
+The machine had arranged old characters into a fresh pattern.
+This, she thought, is the essence of generation.
+
+Chapter 7. Sampling and temperature.
+
+A model outputs a probability for every character in the vocabulary.
+Greedy sampling always picks the most likely one, which is safe but dull.
+Temperature changes the sharpness of the distribution.
+A low temperature makes the model cautious and repetitive.
+A high temperature makes it wild and often wrong.
+Top-k sampling throws away all but the k most likely candidates.
+These knobs let a person steer the model without retraining it.
+The researcher kept a temperature of zero point eight in her notes.
+It was a good middle ground between boring and chaotic.
+
+Chapter 8. What the model cannot do.
+
+A tiny character model has no world knowledge and no long memory.
+It cannot reason about facts that were not in its training text.
+It forgets things that happened more than a few hundred characters ago.
+It confuses names and repeats phrases when it is unsure.
+These limitations are not bugs; they are consequences of scale.
+Give the model more parameters and more data and the picture changes.
+But the principles stay exactly the same: predict the next token, and repeat.
+
+The researcher wrote a warning at the bottom of the page.
+A fluent sentence is not proof of understanding.
+The model can sound certain while being completely wrong.
+Trust the evaluation, not the tone of voice.
+She underlined this twice, because it was important.
+
+Chapter 9. Saving the work.
+
+When the run finished, the researcher saved a checkpoint.
+It contained the weights, the vocabulary, and the settings of the model.
+A checkpoint is a snapshot of a moment in training.
+It lets you stop today and continue the story tomorrow.
+She could also load it and simply ask the model to write more text.
+This was the part she liked best: the model was now a tool.
+
+The fan on the old machine kept humming after the loop ended.
+The loss curve was drawn on a page and taped to the wall.
+It went down quickly at first and then more slowly, as curves do.
+There was still noise, but the direction was clear.
+Progress, she wrote, is mostly a matter of showing up every step.
+
+Chapter 10. The next experiment.
+
+There were many ideas left to try.
+A larger context window would let the model remember more.
+More layers would give it more room to think.
+A bigger corpus would teach it more words and more facts.
+A better tokenizer could split text into pieces smaller than words but larger than letters.
+Each idea would need its own run and its own page in the notebook.
+The researcher closed the notebook and looked at the quiet machine.
+Tomorrow they would train again, one batch at a time.
+The little model had learned to speak, and the lab had learned to listen.
